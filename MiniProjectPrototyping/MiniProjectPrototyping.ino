@@ -24,18 +24,18 @@ void setup() {
 }
 
 void loop() {
-
   int onRead = analogRead(A2);
-  if (onRead < 500) {
-    lcd.clear();
-    lcd.noBacklight();
-  }
-  if (onRead > 500) {
+  while (onRead > 500){
+
     horiControl();
     // Vertical degrees
     verticalControl();
     // power value
     powerControl();
+  onRead = analogRead(A2);
 
   };
+  turnOff();
+  lcd.clear();
+  lcd.noBacklight();
 }
