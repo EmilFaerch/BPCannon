@@ -1,22 +1,17 @@
-/* I2C LCD with Arduino example code. More info: https://www.makerguides.com */
 
-// Include the libraries:
-// LiquidCrystal_I2C.h: https://github.com/johnrickman/LiquidCrystal_I2C
 #include <Wire.h> // Library for I2C communication
 #include <LiquidCrystal_I2C.h> // Library for LCD
 
-// Wiring: SDA pin is connected to A4 and SCL pin to A5.
-// Connect to LCD via I2C, default address 0x27 (A0-A2 not jumpered)
-LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); // Change to (0x27,16,2) for 16x2 LCD.
+LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); // Informs the program what type of LCD is being used
 
 int spinVal = A1;
 int spinPin = 9;
+
 void setup() {
   Serial.begin(9600);
   lcd.init();
   lcd.backlight();
   int potPin = A3;
-  int onSwitch = A2;
   int powerPin = A1;
 
   pinMode(powerPin, INPUT);
@@ -24,17 +19,21 @@ void setup() {
 }
 
 void loop() {
+  //The A2 pin is read to see if the on-switch is flicked on
   int onRead = analogRead(A2);
+  //If the on switch is flicked, the following code is executed while it is on
   while (onRead > 500){
-
+    //Function for the horizontal controls
     horiControl();
-    // Vertical degrees
+    // Function for the Vertical controls
     verticalControl();
-    // power value
+    // Funtion for controlling the speed of the wheels
     powerControl();
+  //The value is read again so the function also exits the while loop
   onRead = analogRead(A2);
 
   };
+  //When the on switch is not flicked, the following code is run
   turnOff();
   lcd.clear();
   lcd.noBacklight();

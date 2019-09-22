@@ -5,6 +5,7 @@ void horiControl() {
   lcd.setCursor(0, 0); // Set the cursor on the first column and first row.
   lcd.print("Hori Degrees: ");
   lcd.print(horiDeg);
+  //This code is made to ensure the display clears all the digits when it goes below two.
   if (horiDeg < 10) {
     delay(1000);
     lcd.clear();
